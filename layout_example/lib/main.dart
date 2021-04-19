@@ -4,7 +4,16 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
+}
+
+class MyAppState extends State<StatefulWidget> {
+  bool _isFavorited = false;
+  int _star = 41;
   @override
   Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
@@ -37,11 +46,18 @@ class MyApp extends StatelessWidget {
           ),
           Row(
             children: [
-              Icon(
-                Icons.star,
-                color: Colors.red[500],
+              IconButton(
+                icon: Icon(_isFavorited?Icons.star:Icons.star_border),
+                color: _isFavorited?Colors.red[500]:null,
+                onPressed: () {
+                  setState(() {
+                    var s = _isFavorited?-1:1;
+                    _star += s;
+                    _isFavorited = !_isFavorited;
+                  });
+                },
               ),
-              Text('41'),
+              Text('$_star'),
             ],
           )
         ],

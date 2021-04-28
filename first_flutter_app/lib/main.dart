@@ -1,3 +1,4 @@
+import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,18 +24,27 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
-      routes: {
-        "new_page": (context) => NewRoute(
-            text: ModalRoute.of(context)!.settings.arguments as String),
-      },
+      // routes: {
+      //   "new_page": (context) => NewRoute(
+      //       text: ModalRoute.of(context)!.settings.arguments as String),
+      // },
       onGenerateRoute: (RouteSettings settings) {
         // 没有注册时触发
         return MaterialPageRoute(
           builder: (context) {
-            String? routeName = settings.name;
-            print('generate $routeName');
+            String? routeName = settings.name?.toString();
+            if (routeName != null) {
+              print('generate $routeName');
+            }
+
+            String? text =
+                ModalRoute.of(context)?.settings.arguments?.toString();
+            if (text == null) {
+              text = '';
+            }
             return NewRoute(
-                text: ModalRoute.of(context)!.settings.arguments as String);
+              text: text,
+            );
           },
         );
       },
@@ -129,7 +139,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     textStyle: MaterialStateProperty.all(TextStyle(
                   color: Colors.blue,
                 ))),
-                child: Text('open new route'))
+                child: Text('open new route')),
+            RandomWordsWidget(),
           ],
         ),
       ),
@@ -196,6 +207,17 @@ class TipRoute extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class RandomWordsWidget extends StatelessWidget {
+  final wordPair = WordPair.random();
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text(wordPair.asPascalCase),
     );
   }
 }

@@ -141,6 +141,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 ))),
                 child: Text('open new route')),
             RandomWordsWidget(),
+            TextButton(
+              onPressed: () {
+                // ScaffoldState? _state =
+                //     context.findAncestorStateOfType<ScaffoldState>();
+                // if (_state == null) return;
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text('text'),
+                ));
+              },
+              child: Text('state'),
+            ),
           ],
         ),
       ),
@@ -150,6 +161,43 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print('initState');
+  }
+
+  // 热加载时生效
+  @override
+  void didUpdateWidget(covariant MyHomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('didUpdateWidget');
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    print('deactivate');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('dispose');
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    print('reassembel');
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('didChangeDependencise');
   }
 }
 
